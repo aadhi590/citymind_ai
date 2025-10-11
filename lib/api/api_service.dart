@@ -223,6 +223,67 @@ static Future<Map<String, dynamic>> redeemReward({
 }) async {
   return await _post("/civic/redeem/$userId", {"item": item});
 }
+// -------------------- ✅ Community Feed APIs --------------------
+  /// Get all community posts (public civic reports)
+  static Future<List<Map<String, dynamic>>> getCommunityFeed() async {
+    try {
+      final response = await _get("/civic/reports");
+      final List<dynamic> data = response["data"] ?? [];
+      return List<Map<String, dynamic>>.from(data);
+    } catch (e) {
+      debugPrint("Error loading community feed: $e");
+      throw ApiException("Failed to load community feed: $e");
+    }
+  }
+
+  /// Post a new community message (optional — for future)
+  static Future<Map<String, dynamic>> postCommunityUpdate({
+    required String userId,
+    required String description,
+    String? imageBase64,
+  }) async {
+    final body = {
+      "user_id": userId,
+      "description": description,
+      if (imageBase64 != null) "image_base64": imageBase64,
+    };
+    return await _post("/community/post", body);
+  }
+
+static Future<Map<String, dynamic>> runAgenticBrain({
+  required String goal,
+  String area = "Bengaluru",
+}) async {
+  try {
+    final Uri url = Uri.parse("$baseUrl/agent/execute");
+    debugPrint(" Running CityMind Agent for $area → Goal: $goal");
+
+    final response = await http
+        .post(
+          url,
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+          body: jsonEncode({
+            "goal": goal,
+            "area": area,
+          }),
+        )
+        .timeout(const Duration(seconds: 120));
+
+    if (response.statusCode == 200) {
+      debugPrint(" Agent response: ${response.body}");
+      return jsonDecode(response.body);
+    } else {
+      debugPrint(" Agent failed: ${response.statusCode}");
+      return {"success": false, "error": "Agent failed: ${response.statusCode}"};
+    }
+  } catch (e) {
+    debugPrint(" Agent error: $e");
+    return {"success": false, "error": e.toString()};
+  }
+}
 
   // -------------------- Health Check --------------------
 

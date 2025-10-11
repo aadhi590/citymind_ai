@@ -1,39 +1,47 @@
 name: flutter_application_1
-description: "CityMind AI - Smart Civic + Urban Intelligence app."
-publish_to: 'none' # Keep private
+description: "CityMind AI – Smart Civic + Urban Intelligence app."
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.9.2 <4.0.0"
+  sdk: ">=3.9.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.1
 
-  # Cupertino Icons (iOS style icons)
-  cupertino_icons: ^1.0.8
+  # 🌐 HTTP Requests (for FastAPI / Agent backend)
+  http: ^1.2.2
 
-  # Google Maps for Environment tab
+  # 📍 Google Maps (for Environmental Dashboard)
   google_maps_flutter: ^2.6.1
 
-  # Image Picker for Civic Reporting
+  # 📸 Image Picker (for Civic Issue Reporting)
   image_picker: ^1.1.1
 
-  # Firebase (core + Firestore + Storage + Auth)
-  firebase_core: ^3.6.0
+  # 🔥 Firebase Integration
+  firebase_core: ^3.15.0
+  firebase_auth: ^5.3.2
   cloud_firestore: ^5.4.4
   firebase_storage: ^12.3.2
-  firebase_auth: ^5.3.2
 
-  # State management
+  # 🧠 State Management
   provider: ^6.1.2
+
+  # 🧮 Date / Number formatting
+  intl: ^0.19.0
+
+  # 🍎 Cupertino Icons (for iOS style icons)
+  cupertino_icons: ^1.0.8
+
+  # 🧩 JSON Utilities
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true
